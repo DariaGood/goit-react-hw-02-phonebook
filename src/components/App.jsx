@@ -37,9 +37,6 @@ export class App extends Component {
     }));
   }
 
-
-  
-
   onInputValue(e) {
     //const filterValue = e.target.value;
     this.setState({ filter: e.target.value });
@@ -71,8 +68,10 @@ export class App extends Component {
         />
         <h2>Contacts</h2>
         <Filter filter={this.state.filter} onInputValue={this.onInputValue} />
-        <ContactList contacts={this.filterContacts()}
-        onDeleteContact={this.deleteContact}/>
+        <ContactList
+          contacts={this.filterContacts()}
+          onDeleteContact={this.deleteContact}
+        />
       </div>
     );
   }
