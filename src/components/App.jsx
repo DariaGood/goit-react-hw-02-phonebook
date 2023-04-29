@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ContactForm from './contactForm/ContactForm';
 import ContactList from './contactList/ContactList';
 import Filter from './filter/Filter';
+import styles from './app.module.css';
 
 export class App extends Component {
   constructor(props) {
@@ -53,20 +54,26 @@ export class App extends Component {
     return (
       <div
         style={{
-          height: '100vh',
+          //height: '100vh',
           // display: 'flex',
           // justifyContent: 'center',
           // alignItems: 'center',
-          fontSize: 40,
+          //fontSize: 40,
+          maxWidth: '400px',
+          paddingTop: '50px',
+          paddingBottom: '50px',
+          margin: '0 auto',
           color: '#010101',
         }}
       >
-        <h1>Phonebook</h1>
-        <ContactForm
-          contacts={this.state.contacts}
-          onAddContact={this.addContact}
-        />
-        <h2>Contacts</h2>
+        <div className={styles.form}>
+          <h1 className={styles.titles}>Phonebook</h1>
+          <ContactForm
+            contacts={this.state.contacts}
+            onAddContact={this.addContact}
+          />
+        </div>
+        <h2 className={styles.titles}>Contacts</h2>
         <Filter filter={this.state.filter} onInputValue={this.onInputValue} />
         <ContactList
           contacts={this.filterContacts()}
