@@ -7,7 +7,6 @@ class ContactForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contacts: [],
       name: '',
       number: '',
     };
@@ -20,7 +19,6 @@ class ContactForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    //let newContact = null;
 
     const nanoid = customAlphabet('1234567890abcdef', 10);
     const id = nanoid();
@@ -31,30 +29,27 @@ class ContactForm extends Component {
     };
     this.props.onAddContact(newContact);
     this.setState({ name: '', number: '' });
-    console.log('form ok', newContact);
   }
 
   handleChangeName(e) {
-    console.log('sjjsk', e.target.value);
     this.setState({ name: e.target.value });
   }
 
   handleChangeNumber(e) {
-    console.log('sjjsk', e.target.value);
     this.setState({ number: e.target.value });
   }
 
   render() {
     const { number, name } = this.state;
 
+    const inputValidName = classNames(styles.inputContact, {
+      [styles.invalid]: name === '', // || name.toLowerCase().includes(newContact.name.toLowerCase()),
+      [styles.valid]: name !== '',
+    });
+
     const inputValidNumber = classNames(styles.inputContact, {
       [styles['invalid']]: typeof number !== 'number' || number < '',
       [styles['valid']]: typeof number === 'number' && !Number.isNaN(number),
-    });
-
-    const inputValidName = classNames(styles.inputContact, {
-      [styles.invalid]: name === '',
-      [styles.valid]: name !== '',
     });
 
     return (
@@ -90,4 +85,6 @@ class ContactForm extends Component {
     );
   }
 }
+
+
 export default ContactForm;

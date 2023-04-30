@@ -18,13 +18,17 @@ export class App extends Component {
     };
     this.addContact = this.addContact.bind(this);
     this.deleteContact = this.deleteContact.bind(this);
-    this.onInputValue = this.onInputValue.bind(this);
-    this.filterContacts = this.filterContacts.bind(this);
+    this.handleChangeFilterValue = this.handleChangeFilterValue.bind(this);
+    this.checkFilterListContacts = this.checkFilterListContacts.bind(this);
   }
 
   addContact(newContact) {
-    if (this.state.contacts.some(contact => contact.name === newContact.name)) {
-      alert(`${newContact.name} is already in contacts`);
+    if (
+      this.state.contacts.some(contact =>
+        contact.name.toLowerCase().includes(newContact.name.toLowerCase())
+      )
+    ) {
+      return alert(`${newContact.name} is already in contacts`);
     } else {
       this.setState(prevState => ({
         contacts: [...prevState.contacts, newContact],
@@ -38,13 +42,13 @@ export class App extends Component {
     }));
   }
 
-  onInputValue(e) {
-    //const filterValue = e.target.value;
+  handleChangeFilterValue(e) {
     this.setState({ filter: e.target.value });
   }
 
-  filterContacts() {
+  checkFilterListContacts() {
     const filterValue = this.state.filter.toLowerCase();
+
     return this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(filterValue)
     );
@@ -54,11 +58,6 @@ export class App extends Component {
     return (
       <div
         style={{
-          //height: '100vh',
-          // display: 'flex',
-          // justifyContent: 'center',
-          // alignItems: 'center',
-          //fontSize: 40,
           maxWidth: '400px',
           paddingTop: '50px',
           paddingBottom: '50px',
@@ -68,19 +67,18 @@ export class App extends Component {
       >
         <div className={styles.form}>
           <h1 className={styles.titles}>Phonebook</h1>
-          <ContactForm
-            contacts={this.state.contacts}
-            onAddContact={this.addContact}
-          />
+          <ContactForm onAddContact={this.addContact} />
         </div>
         <h2 className={styles.titles}>Contacts</h2>
-        <Filter filter={this.state.filter} onInputValue={this.onInputValue} />
+        <Filter
+          filter={this.state.filter}
+          handleChangeFilterValue={this.handleChangeFilterValue}
+        />
         <ContactList
-          contacts={this.filterContacts()}
+          filterListContacts={this.checkFilterListContacts()}
           onDeleteContact={this.deleteContact}
         />
       </div>
     );
   }
 }
-
